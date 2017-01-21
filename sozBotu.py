@@ -16,5 +16,13 @@ icerigiAl=BeautifulSoup(AnalizEdilecekIcerik,"lxml") #read and analyze HTML code
 #Filter HTML code which analyzed with CSS selector for just div tags
 sozler=icerigiAl.select("div#PageContent") #get div containers
 
+gonderilecekYazi="" #we will sent this to telegram chat
+
 for i in range(0,len(sozler)): #iterate from 0 to length of our list
-    print(sozler[i].contents[0].text +": "+sozler[i].contents[2]+"\n") #Parse tags' contents and print
+    gonderilecekYazi+=sozler[i].contents[0].text +": "+sozler[i].contents[2]+"\n\n"
+
+token = "309763441:AAGSg428wxoneR82YrFphrphqmr6n97cz_Y" #telegram token
+chat_id = "253529798" #telegram id
+
+requests.post(url='https://api.telegram.org/bot{0}/sendMessage'.format(token), data={'chat_id': 253529798, 'text': gonderilecekYazi}).json()
+#telegram sendMessage url, more commands --> https://core.telegram.org/bots
